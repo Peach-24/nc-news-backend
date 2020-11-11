@@ -30,3 +30,19 @@ exports.createArticleRef = (articleData) => {
   }
   return ref;
 };
+
+exports.formatArticleComments = (originalData) => {
+  const newData = originalData.map(({ article_id, ...rest }) => {
+    const newComments = { ...rest };
+    return newComments;
+  });
+  return newData;
+};
+
+exports.removeBodyProperty = (originalData) => {
+  const newData = originalData.map(({ body, ...rest }) => {
+    const newComments = { ...rest };
+    return newComments;
+  });
+  return newData;
+};

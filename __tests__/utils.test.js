@@ -2,6 +2,8 @@ const {
   formatTimeStamp,
   createArticleRef,
   formatComments,
+  formatArticleComments,
+  removeBodyProperty,
 } = require("../db/utils/data-manipulation.js");
 
 describe("formatTimeStamp", () => {
@@ -122,5 +124,101 @@ describe("formatComments", () => {
       },
     ];
     expect(formatComments(input, articleRef)).toEqual(expectedOutput);
+  });
+});
+
+describe("formatArticleComments", () => {
+  it("returns an array without a article_id property", () => {
+    const originalData = [
+      {
+        comment_id: 14,
+        author: "icellusedkars",
+        article_id: 5,
+        votes: 16,
+        created_at: null,
+        body:
+          "What do you see? I have no idea where this will lead us. This place I speak of, is known as the Black Lodge.",
+      },
+      {
+        comment_id: 15,
+        author: "butter_bridge",
+        article_id: 5,
+        votes: 1,
+        created_at: null,
+        body: "I am 100% sure that we're not completely sure.",
+      },
+    ];
+    const expectedOutput = [
+      {
+        comment_id: 14,
+        author: "icellusedkars",
+        votes: 16,
+        created_at: null,
+        body:
+          "What do you see? I have no idea where this will lead us. This place I speak of, is known as the Black Lodge.",
+      },
+      {
+        comment_id: 15,
+        author: "butter_bridge",
+        votes: 1,
+        created_at: null,
+        body: "I am 100% sure that we're not completely sure.",
+      },
+    ];
+    expect(formatArticleComments(originalData)).toEqual(expectedOutput);
+  });
+  it("does not mutate the original data", () => {
+    const originalData = [
+      {
+        comment_id: 14,
+        author: "icellusedkars",
+        article_id: 5,
+        votes: 16,
+        created_at: null,
+        body:
+          "What do you see? I have no idea where this will lead us. This place I speak of, is known as the Black Lodge.",
+      },
+    ];
+    formatArticleComments(originalData);
+    expect(originalData).toEqual([
+      {
+        comment_id: 14,
+        author: "icellusedkars",
+        article_id: 5,
+        votes: 16,
+        created_at: null,
+        body:
+          "What do you see? I have no idea where this will lead us. This place I speak of, is known as the Black Lodge.",
+      },
+    ]);
+  });
+});
+
+describe("removeBodyProperty", () => {
+  it("does what it says on the tin - removes body prop from return obj of all articles", () => {
+    const originalData = [
+      {
+        article_id: 3,
+        title: "Eight pug gifs that remind me of mitch",
+        body: "some gifs",
+        votes: 0,
+        topic: "mitch",
+        author: "icellusedkars",
+        created_at: "2010-11-17T12:21:54.000Z",
+        comment_count: "0",
+      },
+    ];
+    const expectedOutput = [
+      {
+        article_id: 3,
+        title: "Eight pug gifs that remind me of mitch",
+        votes: 0,
+        topic: "mitch",
+        author: "icellusedkars",
+        created_at: "2010-11-17T12:21:54.000Z",
+        comment_count: "0",
+      },
+    ];
+    expect(removeBodyProperty(originalData)).toEqual(expectedOutput);
   });
 });

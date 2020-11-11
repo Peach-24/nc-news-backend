@@ -1,9 +1,14 @@
 \c nc_news_test
 
 
+-- -- GET ALL ARTICLES WITH COMMENT_COUNTs
+-- SELECT articles.*, COUNT(comment_id) AS comment_count FROM articles
+-- LEFT JOIN comments ON articles.article_id = comments.article_id
+-- GROUP BY articles.article_id;
 
-SELECT articles.*, COUNT(comment_id) AS comment_count FROM articles
+-- SELECT comment_id, author AS username, article_id, votes, created_at FROM comments;
 
-LEFT JOIN comments ON articles.article_id = comments.article_id
+-- INSERT INTO comments (username AS author, article_id, body) VALUES ('butter_bridge', 3, 'I think this should be a longer list!')
 
-GROUP BY articles.article_id;
+-- SELECT * FROM comments
+-- where article_id = 5;

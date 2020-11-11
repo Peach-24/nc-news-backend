@@ -10,7 +10,7 @@ const {
 app.use(express.json());
 app.use("/api", apiRouter);
 
-// app.get("/api/*", send404);
+app.get("/api/*", send404);
 
 app.use(handlePSQLErrors);
 app.use(handleInternalErrors);

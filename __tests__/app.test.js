@@ -75,32 +75,53 @@ describe("/api", () => {
             expect(res.body.articles.length).toEqual(12);
           });
       });
-    });
-  });
-  describe("/api/articles/:article_id", () => {
-    describe.only("GET", () => {
-      it("status:200 - returns an object for the correct article from the article_id", () => {
+      it("array contains all the necessary properties", () => {
         return request(app)
-          .get("/api/articles/3")
+          .get("/api/articles")
           .expect(200)
-          .then((res) => {
-            expect(typeof res.body).toBe("object");
-            expect(res.body.article[0].title).toBe(
-              "Eight pug gifs that remind me of mitch"
-            );
-          });
-      });
-      it("returns an object with all of the required properties", () => {
-        return request(app)
-          .get("/api/articles/3")
-          .expect(200)
-          .then((res) => {
-            expect(Object.keys(res.body.article[0])).toEqual(
+          .then(({ body }) => {
+            expect(Object.keys(body.articles[0])).toEqual(
               expect.arrayContaining([
                 "author",
                 "title",
                 "article_id",
-                "body",
+                "topic",
+                "created_at",
+                "votes",
+                "comment_count",
+              ])
+            );
+            expect(Object.keys(body.articles[0])).toEqual(
+              expect.not.arrayContaining(["body"])
+            );
+          });
+      });
+    });
+  });
+  describe("/api/articles/:article_id", () => {
+    describe("GET", () => {
+      it("status:200 - returns an object for the correct article from the article_id", () => {
+        return request(app)
+          .get("/api/articles/3")
+          .expect(200)
+          .then(({ body }) => {
+            expect(typeof body).toBe("object");
+            // console.log(res.body);
+            expect(body.article[0].title).toBe(
+              "Eight pug gifs that remind me of mitch"
+            );
+          });
+      });
+      it("return objects have all of the required properties", () => {
+        return request(app)
+          .get("/api/articles/3")
+          .expect(200)
+          .then(({ body }) => {
+            expect(Object.keys(body.article[0])).toEqual(
+              expect.arrayContaining([
+                "author",
+                "title",
+                "article_id",
                 "topic",
                 "created_at",
                 "votes",
@@ -132,7 +153,7 @@ describe("/api", () => {
   });
   describe("/api/articles/:article_id/comments", () => {
     describe("POST", () => {
-      it("rejects an object without a username and body property", () => {
+      it("status:400 - rejects an object without a username and body property", () => {
         return request(app)
           .post("/api/articles/3/comments")
           .send({
@@ -144,7 +165,7 @@ describe("/api", () => {
             expect(res.body).toMatchObject({ msg: "Bad request" });
           });
       });
-      xit("status:201 - Created for a valid post request", () => {
+      it("status:201 - Created for a valid post request", () => {
         return request(app)
           .post("/api/articles/3/comments")
           .send({
@@ -152,8 +173,90 @@ describe("/api", () => {
             body: "I think this should be a longer list!",
           })
           .expect(201)
-          .then((res) => {});
+          .then((res) => {
+            expect(Object.keys(res.body[0])).toEqual([
+              "comment_id",
+              "author",
+              "article_id",
+              "votes",
+              "created_at",
+              "body",
+            ]);
+          });
       });
+    });
+  });
+  describe("/api/articles/:article_id/comments", () => {
+    describe("GET", () => {
+      it("status 200: - returns an array of all of a specified articles' comments", () => {
+        return request(app)
+          .get("/api/articles/5/comments")
+          .expect(200)
+          .then(({ body }) => {
+            console.log(body);
+            expect(body.comments.length).toEqual(2);
+          });
+      });
+      it("status 200: - returns an array with specified props only", () => {
+        return request(app)
+          .get("/api/articles/5/comments")
+          .expect(200)
+          .then(({ body }) => {
+            expect(Object.keys(body.comments[0])).toEqual(
+              expect.not.arrayContaining(["article_id"])
+            );
+          });
+      });
+      it("status 400: - Bad Request when there's no article with the id provided", () => {
+        return request(app)
+          .get("/api/articles/700/comments")
+          .expect(400)
+          .then(({ body }) => {
+            expect(body).toEqual({ msg: "Bad request" });
+          });
+      });
+    });
+    describe("QUERY settings for comments", () => {
+      it("status:400 for invalid sort by column", () => {
+        return request(app)
+          .get("/api/articles/1/comments?sort_by=potatoes")
+          .expect(400)
+          .then(({ body }) => {
+            expect(body.msg).toBe("Bad request");
+          });
+      });
+      it("status:200 - by default, should be sorted by created_at, descending", () => {
+        return request(app)
+          .get("/api/articles/5/comments")
+          .expect(200)
+          .then(({ body }) => {
+            console.log(body.comments);
+            expect(body.comments).toBeSortedBy("created_at", {
+              descending: true,
+              coerce: true,
+            });
+          });
+      });
+      xit("status:200 for valid sort_by query", () => {
+        return request(app)
+          .get("/api/articles/:article_id/comments?sort_by=author")
+          .expect(200)
+          .then(({ body }) => {
+            expect(body.comments).toBeSortedBy("author", {
+              descending: true,
+              coerce: true,
+            });
+            console.log(body);
+          });
+      });
+    });
+  });
+  describe("/api/comments/:commentId", () => {
+    describe("PATCH", () => {
+      it();
+    });
+    describe("DELETE", () => {
+      it();
     });
   });
 });

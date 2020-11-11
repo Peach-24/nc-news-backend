@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "description": "bc-nc-news",
   "main": "index.js",
+  "jest": {
+    "setupFilesAfterEnv": [
+      "jest-sorted"
+    ]
+  },
   "scripts": {
     "setup-dbs": "psql -f ./db/setup.sql",
     "seed": "knex seed:run",
@@ -30,6 +35,7 @@
   },
   "devDependencies": {
     "jest": "^26.6.3",
+    "jest-sorted": "^1.0.8",
     "supertest": "^6.0.1"
   }
 }
