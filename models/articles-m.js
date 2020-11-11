@@ -1,17 +1,32 @@
 const connection = require("../db/connection.js");
 
-exports.fetchArticleById = (articleId) => {
-  console.log("in the model...");
-  //   console.log("articleID in the model:", articleId);
+exports.fetchAllArticles = () => {
   return connection
-    .select("*")
+    .select("articles.*")
+    .count("comment_id AS comment_count")
     .from("articles")
-    .where("article_id", "=", articleId);
+    .leftJoin("comments", "articles.article_id", "=", "comments.article_id")
+    .groupBy("articles.article_id")
+    .then((article) => {
+      return article;
+    });
+};
+
+exports.fetchArticleById = (articleId) => {
+  return connection
+    .select("articles.*")
+    .count("comment_id AS comment_count")
+    .from("articles")
+    .where("article_id", "=", articleId)
+    .leftJoin("comments", "articles.article_id", "=", "comments.article_id")
+    .groupBy("articles.article_id")
+    .then((article) => {
+      return article;
+    });
 };
 
 exports.updateArticle = (articleId, voteChangeBy) => {
   console.log("in the model...");
-
   return connection("articles")
     .where("article_id", "=", articleId)
     .increment("votes", voteChangeBy)
@@ -20,3 +35,9 @@ exports.updateArticle = (articleId, voteChangeBy) => {
       return updatedArticle;
     });
 };
+
+exports.makeComment = (articleID, comment) => {
+  console.log("in the model...");
+};
+
+exports.fetchComment = () => {};

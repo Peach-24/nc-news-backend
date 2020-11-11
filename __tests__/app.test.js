@@ -65,22 +65,32 @@ describe("/api", () => {
       });
     });
   });
-  describe.only("/api/articles/:article_id", () => {
+  describe("/api/articles", () => {
     describe("GET", () => {
+      it("status:200 - returns array of all articles", () => {
+        return request(app)
+          .get("/api/articles")
+          .expect(200)
+          .then((res) => {
+            expect(res.body.articles.length).toEqual(12);
+          });
+      });
+    });
+  });
+  describe("/api/articles/:article_id", () => {
+    describe.only("GET", () => {
       it("status:200 - returns an object for the correct article from the article_id", () => {
         return request(app)
           .get("/api/articles/3")
           .expect(200)
           .then((res) => {
-            expect(typeof res.body === "object");
-            console.log(res.body);
-            expect(
-              res.body.article[0].title ===
-                "Eight pug gifs that remind me of mitch"
+            expect(typeof res.body).toBe("object");
+            expect(res.body.article[0].title).toBe(
+              "Eight pug gifs that remind me of mitch"
             );
           });
       });
-      xit("returns an object with all of the required properties", () => {
+      it("returns an object with all of the required properties", () => {
         return request(app)
           .get("/api/articles/3")
           .expect(200)
@@ -101,11 +111,11 @@ describe("/api", () => {
       });
     });
     describe("PATCH", () => {
-      it("status:201 - updates the article's vote count", () => {
+      it("status:202 - updates the article's vote count", () => {
         return request(app)
           .patch("/api/articles/3")
           .send({ inc_votes: 1 })
-          .expect(201)
+          .expect(202)
           .then((res) => {
             expect(res.body.updatedArticle[0]).toMatchObject({
               article_id: 3,
@@ -117,6 +127,32 @@ describe("/api", () => {
               created_at: "2010-11-17T12:21:54.000Z",
             });
           });
+      });
+    });
+  });
+  describe("/api/articles/:article_id/comments", () => {
+    describe("POST", () => {
+      it("rejects an object without a username and body property", () => {
+        return request(app)
+          .post("/api/articles/3/comments")
+          .send({
+            username: "butter_bridge",
+            comment: "Great list",
+          })
+          .expect(400)
+          .then((res) => {
+            expect(res.body).toMatchObject({ msg: "Bad request" });
+          });
+      });
+      xit("status:201 - Created for a valid post request", () => {
+        return request(app)
+          .post("/api/articles/3/comments")
+          .send({
+            username: "butter_bridge",
+            body: "I think this should be a longer list!",
+          })
+          .expect(201)
+          .then((res) => {});
       });
     });
   });
