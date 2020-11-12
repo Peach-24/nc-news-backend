@@ -1,5 +1,5 @@
 exports.send404 = (req, res, next) => {
-  res.status(404).send({ msg: "Not found" }).next();
+  res.status(404).send({ msg: "Not found" });
 };
 
 exports.handlePSQLErrors = (err, req, res, next) => {
@@ -7,10 +7,10 @@ exports.handlePSQLErrors = (err, req, res, next) => {
   const errorCodes = ["42703"];
   if (errorCodes.includes(err.code)) {
     res.status(400).send({ msg: "Bad request" });
-  }
+  } else next(err);
 };
 
 exports.handleInternalErrors = (err, req, res, next) => {
-  console.log(err);
-  res.status(500).send({ msg: "Internal Server Error" }).next(err);
+  console.log("INTERNAL ERROR >>>>>>>>", err.toString());
+  res.status(500).send({ msg: "Internal Server Error" });
 };

@@ -10,6 +10,16 @@ describe("/api", () => {
   beforeEach(() => {
     return connection.seed.run();
   });
+
+  it("/api - status 200: returns a json file of all the endpoints", () => {
+    return request(app)
+      .get("/api")
+      .expect(200)
+      .then(({ body }) => {
+        console.log(body);
+      });
+  });
+
   describe("/api/topics", () => {
     describe("GET", () => {
       it("status:200 - responds with an array of all topics", () => {
@@ -96,40 +106,30 @@ describe("/api", () => {
             );
           });
       });
-      describe.only("QUERY settings for articles", () => {
+      describe("QUERY settings for articles", () => {
         /* MUST ACCEPT QUERIES FOR: 
       - sort_by (any column, defaults to date)
       - order (which can be set to asc or desc, defaults to desc)
       - author (filters the articles by the username value, specified in the query)
       - topic (filters the articles by the topic value, specified in the query)  */
-        it("status:400 for invalid sort by column", () => {
-          return request(app)
-            .get("/api/articles/?sort_by=potatoes")
-            .expect(400)
-            .then(({ body }) => {
-              expect(body.msg).toBe("Bad request");
-            });
-        });
         it("status:200 for valid sort_by query", () => {
           return request(app)
-            .get("/api/articles/?sort_by=votes")
+            .get("/api/articles?sort_by=votes")
             .expect(200)
             .then(({ body }) => {
               console.log(body);
-              expect(body.comments).toBeSortedBy("votes", {
+              expect(body.articles).toBeSortedBy("votes", {
                 descending: true,
                 coerce: true,
               });
-              console.log(body);
             });
         });
         it("status:200 - Can include ORDER query which sorts results either ASC or DESC", () => {
           return request(app)
-            .get("/api/articles/?sort_by=votes&order=ASC")
+            .get("/api/articles?sort_by=votes&order=ASC")
             .expect(200)
             .then(({ body }) => {
-              console.log(body);
-              expect(body.comments).toBeSortedBy("votes", {
+              expect(body.articles).toBeSortedBy("votes", {
                 descending: false,
                 coerce: true,
               });
@@ -140,15 +140,51 @@ describe("/api", () => {
             .get("/api/articles")
             .expect(200)
             .then(({ body }) => {
-              expect(body.comments).toBeSortedBy("date", {
+              console.log(body);
+              expect(body.articles).toBeSortedBy("created_at", {
                 descending: true,
                 coerce: true,
               });
             });
         });
+        it("status:200 - valid AUTHOR queries accepted, which filters results accordingly ", () => {
+          return request(app)
+            .get("/api/articles?author=butter_bridge")
+            .expect(200)
+            .then(({ body }) => {
+              const author = "butter_bridge";
+              const allBelongToAuthor = body.articles.every((article) => {
+                return article.author === author;
+              });
+              expect(allBelongToAuthor).toBe(true);
+              // console.log(body.articles);
+            });
+        });
+        it("status:200 - valid TOPIC queries accepted, which filters results accordingly ", () => {
+          return request(app)
+            .get("/api/articles?topic=mitch")
+            .expect(200)
+            .then(({ body }) => {
+              const topic = "mitch";
+              const underTopic = body.articles.every((article) => {
+                return article.topic === topic;
+              });
+              expect(underTopic).toBe(true);
+              // console.log(body.articles);
+            });
+        });
+        it("status:400 for invalid sort by column", () => {
+          return request(app)
+            .get("/api/articles?sort_by=potatoes")
+            .expect(400)
+            .then(({ body }) => {
+              expect(body.msg).toBe("Bad request");
+            });
+        });
       });
     });
   });
+
   describe("/api/articles/:article_id", () => {
     describe("GET", () => {
       it("status:200 - returns an object for the correct article from the article_id", () => {
@@ -265,7 +301,7 @@ describe("/api", () => {
             expect(body).toEqual({ msg: "Bad request" });
           });
       });
-      describe.only("QUERY settings for article's comments", () => {
+      describe("QUERY settings for article's comments", () => {
         it("status:400 for invalid sort by column", () => {
           return request(app)
             .get("/api/articles/1/comments?sort_by=potatoes")
@@ -376,9 +412,6 @@ describe("/api", () => {
     });
     describe("DELETE", () => {
       it("status: 204 - deletes the given comment by comment_id", () => {
-        /*  TEST DATA COMMENTS.length = 18.
-        TEST COMMENT TO BE DELETED
-         comment_id: 16 | butter_bridge | article_id  6 | votes:    1 | 2002-11-26 12:36:03+00 | body: This is a bad article name*/
         return request(app)
           .delete("/api/comments/16")
           .expect(204)

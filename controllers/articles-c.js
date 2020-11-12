@@ -12,17 +12,20 @@ const {
 } = require("../db/utils/data-manipulation");
 
 exports.getAllArticles = (req, res, next) => {
-  // console.log("in the controller...");
-  fetchAllArticles()
+  const { sort_by, order, author, topic } = req.query;
+  fetchAllArticles(sort_by, order, author, topic)
     .then((articles) => {
       const formattedArticles = removeBodyProperty(articles);
-      res.status(200).send({ articles: formattedArticles });
+      if (formattedArticles.length === 0) {
+        res.status(400).send({ msg: "Bad request" });
+      } else {
+        res.status(200).send({ articles: formattedArticles });
+      }
     })
     .catch(next);
 };
 
 exports.getArticleById = (req, res, next) => {
-  // console.log("in the controller...");
   const { article_id } = req.params;
   fetchArticleById(article_id)
     .then((article) => {
@@ -32,11 +35,9 @@ exports.getArticleById = (req, res, next) => {
 };
 
 exports.patchArticle = (req, res, next) => {
-  // console.log("in the controller");
   const { article_id } = req.params;
   const { inc_votes } = req.body;
   const voteChangeBy = inc_votes;
-
   updateArticle(article_id, voteChangeBy)
     .then((updatedArticle) => {
       res.status(202).send({ updatedArticle });
@@ -45,7 +46,6 @@ exports.patchArticle = (req, res, next) => {
 };
 
 exports.postComment = (req, res, next) => {
-  // console.log("in the controller");
   if (req.body.hasOwnProperty("username") && req.body.hasOwnProperty("body")) {
     const articleId = req.params.article_id;
     const { username, body } = req.body;
@@ -61,7 +61,6 @@ exports.postComment = (req, res, next) => {
 };
 
 exports.getCommentsByArticleId = (req, res, next) => {
-  console.log("In the controller...");
   const { article_id } = req.params;
   const { sort_by, order } = req.query;
   fetchCommentsByArticleId(article_id, sort_by, order)

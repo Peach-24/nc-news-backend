@@ -5,7 +5,6 @@ exports.fetchAllComments = () => {
 };
 
 exports.updateComment = (commentId, voteChangeBy) => {
-  console.log(commentId, voteChangeBy);
   return connection("comments")
     .where("comment_id", "=", commentId)
     .increment("votes", voteChangeBy)

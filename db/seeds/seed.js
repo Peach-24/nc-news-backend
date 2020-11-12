@@ -20,13 +20,13 @@ exports.seed = function (knex) {
       return knex.insert(topicData).into("topics").returning("*");
     })
     .then((topicRows) => {
-      console.log(`inserted ${topicRows.length} topics`);
+      // console.log(`inserted ${topicRows.length} topics`);
       return knex
         .insert(userData)
         .into("users")
         .returning("*")
         .then((usersRows) => {
-          console.log(`inserted ${usersRows.length} users`);
+          // console.log(`inserted ${usersRows.length} users`);
           const formattedArticles = formatTimeStamp(articleData);
 
           return knex
@@ -34,7 +34,7 @@ exports.seed = function (knex) {
             .into("articles")
             .returning("*")
             .then((articleRows) => {
-              console.log(`inserted ${articleRows.length} articles`);
+              // console.log(`inserted ${articleRows.length} articles`);
               const articleRef = createArticleRef(articleRows);
               const timeStampedComments = formatTimeStamp(commentData);
               const formattedComments = formatComments(
@@ -46,7 +46,7 @@ exports.seed = function (knex) {
                 .into("comments")
                 .returning("*")
                 .then((commentRows) => {
-                  console.log(`inserted ${commentRows.length} comments`);
+                  // console.log(`inserted ${commentRows.length} comments`);
                 });
             });
         });

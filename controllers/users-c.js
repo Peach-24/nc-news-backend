@@ -1,7 +1,6 @@
 const { fetchUserByUsername } = require("../models/users-m");
 
 exports.getUserByUsername = (req, res, next) => {
-  console.log("in the controller...");
   const { username } = req.params;
   fetchUserByUsername(username)
     .then((user) => {
