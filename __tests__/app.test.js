@@ -96,6 +96,57 @@ describe("/api", () => {
             );
           });
       });
+      describe.only("QUERY settings for articles", () => {
+        /* MUST ACCEPT QUERIES FOR: 
+      - sort_by (any column, defaults to date)
+      - order (which can be set to asc or desc, defaults to desc)
+      - author (filters the articles by the username value, specified in the query)
+      - topic (filters the articles by the topic value, specified in the query)  */
+        it("status:400 for invalid sort by column", () => {
+          return request(app)
+            .get("/api/articles/?sort_by=potatoes")
+            .expect(400)
+            .then(({ body }) => {
+              expect(body.msg).toBe("Bad request");
+            });
+        });
+        it("status:200 for valid sort_by query", () => {
+          return request(app)
+            .get("/api/articles/?sort_by=votes")
+            .expect(200)
+            .then(({ body }) => {
+              console.log(body);
+              expect(body.comments).toBeSortedBy("votes", {
+                descending: true,
+                coerce: true,
+              });
+              console.log(body);
+            });
+        });
+        it("status:200 - Can include ORDER query which sorts results either ASC or DESC", () => {
+          return request(app)
+            .get("/api/articles/?sort_by=votes&order=ASC")
+            .expect(200)
+            .then(({ body }) => {
+              console.log(body);
+              expect(body.comments).toBeSortedBy("votes", {
+                descending: false,
+                coerce: true,
+              });
+            });
+        });
+        it("status:200 - by default, should be sorted by created_at, in descending order", () => {
+          return request(app)
+            .get("/api/articles")
+            .expect(200)
+            .then(({ body }) => {
+              expect(body.comments).toBeSortedBy("date", {
+                descending: true,
+                coerce: true,
+              });
+            });
+        });
+      });
     });
   });
   describe("/api/articles/:article_id", () => {
@@ -193,7 +244,6 @@ describe("/api", () => {
           .get("/api/articles/5/comments")
           .expect(200)
           .then(({ body }) => {
-            console.log(body);
             expect(body.comments.length).toEqual(2);
           });
       });
@@ -215,48 +265,141 @@ describe("/api", () => {
             expect(body).toEqual({ msg: "Bad request" });
           });
       });
+      describe.only("QUERY settings for article's comments", () => {
+        it("status:400 for invalid sort by column", () => {
+          return request(app)
+            .get("/api/articles/1/comments?sort_by=potatoes")
+            .expect(400)
+            .then(({ body }) => {
+              expect(body.msg).toBe("Bad request");
+            });
+        });
+        it("status:200 for valid sort_by query", () => {
+          return request(app)
+            .get("/api/articles/1/comments?sort_by=votes")
+            .expect(200)
+            .then(({ body }) => {
+              console.log(body);
+              expect(body.comments).toBeSortedBy("votes", {
+                descending: true,
+                coerce: true,
+              });
+              console.log(body);
+            });
+        });
+        it("status:200 - Can include ORDER query which sorts results either ASC or DESC", () => {
+          return request(app)
+            .get("/api/articles/5/comments?sort_by=votes&order=DESC")
+            .expect(200)
+            .then(({ body }) => {
+              console.log(body);
+              expect(body.comments).toBeSortedBy("votes", {
+                descending: true,
+                coerce: true,
+              });
+            });
+        });
+        it("status:200 - by default, should be sorted by created_at, in descending order", () => {
+          return request(app)
+            .get("/api/articles/5/comments")
+            .expect(200)
+            .then(({ body }) => {
+              expect(body.comments).toBeSortedBy("created_at", {
+                descending: true,
+                coerce: true,
+              });
+            });
+        });
+      });
     });
-    describe("QUERY settings for comments", () => {
-      it("status:400 for invalid sort by column", () => {
+  });
+  describe("/api/comments", () => {
+    describe("GET", () => {
+      it("status:200 - returns array of all comments", () => {
         return request(app)
-          .get("/api/articles/1/comments?sort_by=potatoes")
-          .expect(400)
-          .then(({ body }) => {
-            expect(body.msg).toBe("Bad request");
-          });
-      });
-      it("status:200 - by default, should be sorted by created_at, descending", () => {
-        return request(app)
-          .get("/api/articles/5/comments")
+          .get("/api/comments")
           .expect(200)
           .then(({ body }) => {
-            console.log(body.comments);
-            expect(body.comments).toBeSortedBy("created_at", {
-              descending: true,
-              coerce: true,
-            });
-          });
-      });
-      xit("status:200 for valid sort_by query", () => {
-        return request(app)
-          .get("/api/articles/:article_id/comments?sort_by=author")
-          .expect(200)
-          .then(({ body }) => {
-            expect(body.comments).toBeSortedBy("author", {
-              descending: true,
-              coerce: true,
-            });
-            console.log(body);
+            expect(body.comments.length).toEqual(18);
           });
       });
     });
   });
   describe("/api/comments/:commentId", () => {
     describe("PATCH", () => {
-      it();
+      it("status:202 - updates the comment's vote count", () => {
+        return request(app)
+          .patch("/api/comments/2")
+          .send({ inc_votes: 3 })
+          .expect(202)
+          .then(({ body }) => {
+            expect(body.comment[0].votes).toEqual(17);
+          });
+      });
+      it("status:202 - can successfully decrement the comment's vote count", () => {
+        return request(app)
+          .patch("/api/comments/2")
+          .send({ inc_votes: -3 })
+          .expect(202)
+          .then(({ body }) => {
+            expect(body.comment[0].votes).toEqual(11);
+          });
+      });
+      it("status:202 - responds with the updated comment", () => {
+        return request(app)
+          .patch("/api/comments/2")
+          .send({ inc_votes: -3 })
+          .expect(202)
+          .then(({ body }) => {
+            console.log(body);
+            expect(body.comment[0]).toEqual({
+              comment_id: 2,
+              author: "butter_bridge",
+              article_id: 1,
+              votes: 11,
+              created_at: "2016-11-22T12:36:03.000Z",
+              body:
+                "The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky.",
+            });
+          });
+      });
+      it("status:404 - Not found for an invalid comment_id", () => {
+        return request(app)
+          .patch("/api/comments/6970")
+          .send({ inc_votes: -3 })
+          .expect(404)
+          .then(({ body }) => {
+            console.log(body);
+            expect(body).toEqual({ msg: "Cannot find a comment with that id" });
+          });
+      });
     });
     describe("DELETE", () => {
-      it();
+      it("status: 204 - deletes the given comment by comment_id", () => {
+        /*  TEST DATA COMMENTS.length = 18.
+        TEST COMMENT TO BE DELETED
+         comment_id: 16 | butter_bridge | article_id  6 | votes:    1 | 2002-11-26 12:36:03+00 | body: This is a bad article name*/
+        return request(app)
+          .delete("/api/comments/16")
+          .expect(204)
+          .then(() => {
+            return request(app)
+              .get("/api/comments")
+              .expect(200)
+              .then(({ body }) => {
+                console.log(body);
+                expect(body.comments.length).toEqual(17);
+              });
+          });
+      });
+      it("status:404 - Not found for an invalid comment_id", () => {
+        return request(app)
+          .delete("/api/comments/6780")
+          .expect(404)
+          .then(({ body }) => {
+            expect(body).toEqual({ msg: "Cannot find a comment with that id" });
+          });
+      });
     });
   });
 });

@@ -3,7 +3,7 @@ const {
   fetchAllArticles,
   updateArticle,
   makeComment,
-  fetchCommentsbyArticleId,
+  fetchCommentsByArticleId,
 } = require("../models/articles-m.js");
 
 const {
@@ -60,12 +60,11 @@ exports.postComment = (req, res, next) => {
   }
 };
 
-exports.getCommentsbyArticleId = (req, res, next) => {
+exports.getCommentsByArticleId = (req, res, next) => {
   console.log("In the controller...");
   const { article_id } = req.params;
-  const { sort_by } = req.query;
-  console.log(sort_by);
-  fetchCommentsbyArticleId(article_id, sort_by)
+  const { sort_by, order } = req.query;
+  fetchCommentsByArticleId(article_id, sort_by, order)
     .then((comments) => {
       const formattedComments = formatArticleComments(comments);
       if (comments.length === 0) {

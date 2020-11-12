@@ -23,7 +23,6 @@ exports.fetchArticleById = (articleId) => {
 };
 
 exports.updateArticle = (articleId, voteChangeBy) => {
-  // console.log("in the model...");
   return connection("articles")
     .where("article_id", "=", articleId)
     .increment("votes", voteChangeBy)
@@ -34,15 +33,13 @@ exports.updateArticle = (articleId, voteChangeBy) => {
 };
 
 exports.makeComment = (comment) => {
-  // console.log("in the model...");
   return connection.insert(comment).into("comments").returning("*");
 };
 
-exports.fetchCommentsbyArticleId = (article_id, sort_by) => {
-  // console.log("In the model... sorting by:", sort_by);
+exports.fetchCommentsByArticleId = (article_id, sort_by, order = "desc") => {
   return connection
     .select("*")
     .from("comments")
     .where("article_id", "=", article_id)
-    .orderBy(sort_by || "created_at", "desc");
+    .orderBy(sort_by || "created_at", order);
 };

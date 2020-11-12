@@ -1,13 +1,42 @@
-const { updateComment, removeComment } = require("../models/comments-m/js");
+const {
+  updateComment,
+  removeComment,
+  fetchAllComments,
+  doesCommentExist,
+} = require("../models/comments-m.js");
+
+exports.getAllComments = (req, res, next) => {
+  console.log("inside the getAllComments controller");
+  fetchAllComments()
+    .then((comments) => {
+      res.status(200).send({ comments });
+    })
+    .catch(next);
+};
 
 exports.patchComment = (req, res, next) => {
   console.log("inside the patchComment controller...");
   const { comment_id } = req.params;
-  updateComment();
+  const { inc_votes } = req.body;
+  const voteChangeBy = inc_votes;
+  updateComment(comment_id, voteChangeBy)
+    .then((comment) => {
+      if (comment.length === 0) {
+        res.status(404).send({ msg: "Cannot find a comment with that id" });
+      } else {
+        res.status(202).send({ comment });
+      }
+    })
+    .catch(next);
 };
 
 exports.deleteComment = (req, res, next) => {
-  console.log("inside the deleteComment controller...");
   const { comment_id } = req.params;
-  removeComment();
+  removeComment(comment_id).then((comments) => {
+    if (comments.length === 0) {
+      res.status(404).send({ msg: "Cannot find a comment with that id" });
+    } else {
+      res.status(204).send();
+    }
+  });
 };
