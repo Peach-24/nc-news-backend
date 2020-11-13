@@ -2,6 +2,10 @@ exports.send404 = (req, res, next) => {
   res.status(404).send({ msg: "Not found" });
 };
 
+exports.handle405 = (req, res, next) => {
+  res.status(405).send({ msg: "Invalid method" });
+};
+
 exports.handlePSQLErrors = (err, req, res, next) => {
   // console.log("PSQL ERROR CODE:", err.code);
   // console.log(err.toString())

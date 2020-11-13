@@ -5,10 +5,14 @@ const usersRouter = require("./usersRouter.js");
 const articlesRouter = require("./articlesRouter.js");
 const commentsRouter = require("./commentsRouter.js");
 const endpoints = require("../endpoints.json");
+const { handle405 } = require("../controllers/error-controllers.js");
 
-apiRouter.route("/").get((req, res, next) => {
-  res.status(200).send({ endpoints });
-});
+apiRouter
+  .route("/")
+  .get((req, res, next) => {
+    res.status(200).send({ endpoints });
+  })
+  .all(handle405);
 
 apiRouter.use("/topics", topicsRouter);
 apiRouter.use("/users", usersRouter);
