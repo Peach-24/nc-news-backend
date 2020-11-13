@@ -1,4 +1,16 @@
-const { fetchUserByUsername } = require("../models/users-m");
+const {
+  fetchUserByUsername,
+  fetchAllUsers,
+  insertNewUser,
+} = require("../models/users-m");
+
+exports.getAllUsers = (req, res, next) => {
+  fetchAllUsers()
+    .then((users) => {
+      res.status(200).send({ users });
+    })
+    .catch(next);
+};
 
 exports.getUserByUsername = (req, res, next) => {
   const { username } = req.params;
@@ -11,4 +23,17 @@ exports.getUserByUsername = (req, res, next) => {
       }
     })
     .catch(next);
+};
+
+exports.postNewUser = (req, res, next) => {
+  const userInfo = req.body;
+  if (userInfo.hasOwnProperty("name") && userInfo.hasOwnProperty("username")) {
+    insertNewUser(userInfo)
+      .then((newUser) => {
+        res.status(201).send({ newUser });
+      })
+      .catch(next);
+  } else {
+    res.status(400).send({ msg: "Bad request" });
+  }
 };

@@ -4,6 +4,7 @@ const {
   updateArticle,
   makeComment,
   fetchCommentsByArticleId,
+  removeArticle,
 } = require("../models/articles-m.js");
 
 const {
@@ -70,6 +71,19 @@ exports.getCommentsByArticleId = (req, res, next) => {
         res.status(400).send({ msg: "Bad request" });
       } else {
         res.status(200).send({ comments: formattedComments });
+      }
+    })
+    .catch(next);
+};
+
+exports.deleteArticle = (req, res, next) => {
+  const { article_id } = req.params;
+  removeArticle(article_id)
+    .then((article) => {
+      if (article.length === 0) {
+        res.status(404).send({ msg: "Not found" });
+      } else {
+        res.status(204).send();
       }
     })
     .catch(next);

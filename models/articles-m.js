@@ -13,9 +13,6 @@ exports.fetchAllArticles = (sort_by, order, author, topic) => {
       if (author) query.where("articles.author", author);
       if (topic) query.where("articles.topic", topic);
     });
-  // .then((article) => {
-  //   return article;
-  // });
 };
 
 exports.fetchArticleById = (articleId) => {
@@ -33,9 +30,6 @@ exports.updateArticle = (articleId, voteChangeBy) => {
     .where("article_id", "=", articleId)
     .increment("votes", voteChangeBy)
     .returning("*");
-  // .then((updatedArticle) => {
-  //   return updatedArticle;
-  // });
 };
 
 exports.makeComment = (comment) => {
@@ -51,4 +45,11 @@ exports.fetchCommentsByArticleId = (article_id, sort_by, order) => {
     .then((comments) => {
       return comments;
     });
+};
+
+exports.removeArticle = (articleId) => {
+  return connection("articles")
+    .where("article_id", "=", articleId)
+    .delete()
+    .returning("*");
 };

@@ -4,10 +4,11 @@ const topicsRouter = require("./topicsRouter.js");
 const usersRouter = require("./usersRouter.js");
 const articlesRouter = require("./articlesRouter.js");
 const commentsRouter = require("./commentsRouter.js");
+const endpoints = require("../endpoints.json");
 
-// const endpoints = require("../endpoints.json");
-
-// apiRouter.use("/", sendJSON);
+apiRouter.route("/").get((req, res, next) => {
+  res.status(200).send({ endpoints });
+});
 
 apiRouter.use("/topics", topicsRouter);
 apiRouter.use("/users", usersRouter);

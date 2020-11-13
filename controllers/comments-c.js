@@ -2,7 +2,6 @@ const {
   updateComment,
   removeComment,
   fetchAllComments,
-  doesCommentExist,
 } = require("../models/comments-m.js");
 
 exports.getAllComments = (req, res, next) => {

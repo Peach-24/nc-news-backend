@@ -4,7 +4,7 @@ exports.send404 = (req, res, next) => {
 
 exports.handlePSQLErrors = (err, req, res, next) => {
   console.log("PSQL ERROR:", err.toString(), err.code);
-  const errorCodes = ["42703"];
+  const errorCodes = ["42703", "22P02"];
   if (errorCodes.includes(err.code)) {
     res.status(400).send({ msg: "Bad request" });
   } else next(err);
