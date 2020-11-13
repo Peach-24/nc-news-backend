@@ -3,7 +3,8 @@ exports.send404 = (req, res, next) => {
 };
 
 exports.handlePSQLErrors = (err, req, res, next) => {
-  console.log("PSQL ERROR:", err.toString(), err.code);
+  // console.log("PSQL ERROR CODE:", err.code);
+  // console.log(err.toString())
   const errorCodes = ["42703", "22P02"];
   if (errorCodes.includes(err.code)) {
     res.status(400).send({ msg: "Bad request" });
@@ -11,6 +12,6 @@ exports.handlePSQLErrors = (err, req, res, next) => {
 };
 
 exports.handleInternalErrors = (err, req, res, next) => {
-  console.log("INTERNAL ERROR >>>>>>>>", err.toString());
-  res.status(500).send({ msg: "Internal Server Error" });
+  // console.log("INTERNAL ERROR >>>>>>>>", err.toString());
+  res.status(500).send({ msg: "Internal Server Error:", MORE: err.toString() });
 };

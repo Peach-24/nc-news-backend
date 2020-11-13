@@ -81,7 +81,6 @@ describe("/api", () => {
       });
     });
   });
-
   describe("/api/users", () => {
     describe("GET", () => {
       it("status:200 - returns array of all users", () => {
@@ -146,7 +145,7 @@ describe("/api", () => {
     describe("GET", () => {
       it("status:200 - returns array of all articles", () => {
         return request(app)
-          .get("/api/articles")
+          .get("/api/articles?limit=1000")
           .expect(200)
           .then((res) => {
             expect(res.body.articles.length).toEqual(12);
@@ -183,6 +182,44 @@ describe("/api", () => {
                 descending: true,
                 coerce: true,
               });
+            });
+        });
+        it("status:200 - can accept LIMIT query, which limits returned articles", () => {
+          const limit = 5; // <-- change this value to test different limits
+          return request(app)
+            .get(`/api/articles?sort_by=votes&limit=${limit}`)
+            .expect(200)
+            .then(({ body }) => {
+              expect(body.articles.length).toEqual(5);
+              expect(body.articles).toBeSortedBy("votes", {
+                descending: true,
+                coerce: true,
+              });
+            });
+        });
+        it("status:200 - when no LIMIT query is provided, default limit is 10", () => {
+          return request(app)
+            .get("/api/articles?sort_by=votes")
+            .expect(200)
+            .then(({ body }) => {
+              expect(body.articles.length).toEqual(10);
+              expect(body.articles).toBeSortedBy("votes", {
+                descending: true,
+                coerce: true,
+              });
+            });
+        });
+        it("status:200 - can accept P (page) query, which specifies which page to start results at", () => {
+          return request(app)
+            .get("/api/articles?sort_by=article_id&order=ASC&limit=2&p=2")
+            .expect(200)
+            .then(({ body }) => {
+              expect(body.articles).toBeSortedBy("article_id", {
+                descending: false,
+                coerce: true,
+              });
+
+              expect(body.articles[0].article_id).toBe(3);
             });
         });
         it("status:200 - Can include ORDER query which sorts results either ASC or DESC", () => {
@@ -231,7 +268,7 @@ describe("/api", () => {
               expect(underTopic).toBe(true);
             });
         });
-        it("status:400 for invalid sort by column", () => {
+        it("status:400 - for invalid sort by column", () => {
           return request(app)
             .get("/api/articles?sort_by=potatoes")
             .expect(400)
@@ -301,7 +338,7 @@ describe("/api", () => {
           .expect(204)
           .then(() => {
             return request(app)
-              .get("/api/articles")
+              .get("/api/articles?limit=1000")
               .expect(200)
               .then(({ body }) => {
                 expect(body.articles.length).toEqual(11);
@@ -388,12 +425,44 @@ describe("/api", () => {
           });
       });
       describe("QUERY settings for article's comments", () => {
-        it("status:400 for invalid sort by column", () => {
+        it("status:200 - can accept LIMIT query, which limits returned comments", () => {
+          const limit = 5; // <-- change this value to test different limits
           return request(app)
-            .get("/api/articles/1/comments?sort_by=potatoes")
-            .expect(400)
+            .get(`/api/articles/1/comments?sort_by=votes&limit=${limit}`)
+            .expect(200)
             .then(({ body }) => {
-              expect(body.msg).toBe("Bad request");
+              expect(body.comments.length).toEqual(5);
+              expect(body.comments).toBeSortedBy("votes", {
+                descending: true,
+                coerce: true,
+              });
+            });
+        });
+        it("status:200 - when no LIMIT query is provided, default limit is 10", () => {
+          return request(app)
+            .get("/api/articles/1/comments?sort_by=votes")
+            .expect(200)
+            .then(({ body }) => {
+              expect(body.comments.length).toEqual(10);
+              expect(body.comments).toBeSortedBy("votes", {
+                descending: true,
+                coerce: true,
+              });
+            });
+        });
+        it("status:200 - can accept P (page) query, which specifies which page to start results at", () => {
+          return request(app)
+            .get(
+              "/api/articles/1/comments?sort_by=comment_id&limit=3&order=ASC&p=2"
+            )
+            .expect(200)
+            .then(({ body }) => {
+              expect(body.comments).toBeSortedBy("comment_id", {
+                descending: false,
+                coerce: true,
+              });
+              expect(body.comments.length).toEqual(3);
+              expect(body.comments[0].comment_id).toBe(5);
             });
         });
         it("status:200 for valid sort_by query", () => {
@@ -409,11 +478,11 @@ describe("/api", () => {
         });
         it("status:200 - Can include ORDER query which sorts results either ASC or DESC", () => {
           return request(app)
-            .get("/api/articles/5/comments?sort_by=votes&order=DESC")
+            .get("/api/articles/5/comments?sort_by=comment_id&order=ASC")
             .expect(200)
             .then(({ body }) => {
-              expect(body.comments).toBeSortedBy("votes", {
-                descending: true,
+              expect(body.comments).toBeSortedBy("comment_id", {
+                descending: false,
                 coerce: true,
               });
             });
@@ -427,6 +496,14 @@ describe("/api", () => {
                 descending: true,
                 coerce: true,
               });
+            });
+        });
+        it("status:400 for invalid sort by column", () => {
+          return request(app)
+            .get("/api/articles/1/comments?sort_by=potatoes")
+            .expect(400)
+            .then(({ body }) => {
+              expect(body.msg).toBe("Bad request");
             });
         });
       });

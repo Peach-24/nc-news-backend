@@ -14,7 +14,9 @@ const {
 
 exports.getAllArticles = (req, res, next) => {
   const { sort_by, order, author, topic } = req.query;
-  fetchAllArticles(sort_by, order, author, topic)
+  const limit = req.query.limit;
+  const offset = (req.query.p - 1) * limit;
+  fetchAllArticles(sort_by, order, author, topic, limit, offset)
     .then((articles) => {
       const formattedArticles = removeBodyProperty(articles);
       if (formattedArticles.length === 0) {
@@ -64,7 +66,9 @@ exports.postComment = (req, res, next) => {
 exports.getCommentsByArticleId = (req, res, next) => {
   const { article_id } = req.params;
   const { sort_by, order } = req.query;
-  fetchCommentsByArticleId(article_id, sort_by, order)
+  const limit = req.query.limit;
+  const offset = (req.query.p - 1) * limit;
+  fetchCommentsByArticleId(article_id, sort_by, order, limit, offset)
     .then((comments) => {
       const formattedComments = formatArticleComments(comments);
       if (comments.length === 0) {

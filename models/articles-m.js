@@ -1,9 +1,11 @@
 const connection = require("../db/connection.js");
 
-exports.fetchAllArticles = (sort_by, order, author, topic) => {
+exports.fetchAllArticles = (sort_by, order, author, topic, limit, offset) => {
   return connection
     .select("articles.*")
     .count("comment_id AS comment_count")
+    .limit(limit || "10")
+    .offset(offset || "0")
     .from("articles")
     .leftJoin("comments", "articles.article_id", "=", "comments.article_id")
     .groupBy("articles.article_id")
@@ -36,10 +38,18 @@ exports.makeComment = (comment) => {
   return connection.insert(comment).into("comments").returning("*");
 };
 
-exports.fetchCommentsByArticleId = (article_id, sort_by, order) => {
+exports.fetchCommentsByArticleId = (
+  article_id,
+  sort_by,
+  order,
+  limit,
+  offset
+) => {
   return connection
     .select("*")
     .from("comments")
+    .limit(limit || "10")
+    .offset(offset || "0")
     .where("article_id", "=", article_id)
     .orderBy(sort_by || "created_at", order || "desc")
     .then((comments) => {
