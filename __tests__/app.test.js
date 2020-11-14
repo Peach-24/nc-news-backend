@@ -577,7 +577,7 @@ describe("/api", () => {
       });
     });
     describe("DELETE", () => {
-      it("status: 204 - deletes the given comment by comment_id", () => {
+      it("status:204 - deletes the given comment by comment_id", () => {
         return request(app)
           .delete("/api/comments/16")
           .expect(204)
@@ -606,6 +606,64 @@ describe("/api", () => {
             expect(body).toMatchObject({ msg: "Bad request" });
           });
       });
+    });
+  });
+  describe("handle405 tests - Invalid methods", () => {
+    it("status:405 - Invalid method for DELETE user by id", () => {
+      return request(app)
+        .delete("/api/users/4")
+        .expect(405)
+        .then(({ body }) => {
+          expect(body).toMatchObject({ msg: "Invalid method" });
+          return request(app)
+            .get("/api/users?limit=1000")
+            .expect(200)
+            .then(({ body }) => {
+              expect(body.users.length).toEqual(4);
+            });
+        });
+    });
+    it("status:405 - Invalid method for DELETE all articles", () => {
+      return request(app)
+        .delete("/api/articles")
+        .expect(405)
+        .then(({ body }) => {
+          expect(body).toMatchObject({ msg: "Invalid method" });
+          return request(app)
+            .get("/api/articles?limit=1000")
+            .expect(200)
+            .then(({ body }) => {
+              expect(body.articles.length).toEqual(12);
+            });
+        });
+    });
+    it("status:405 - Invalid method for DELETE all comments", () => {
+      return request(app)
+        .delete("/api/comments")
+        .expect(405)
+        .then(({ body }) => {
+          expect(body).toMatchObject({ msg: "Invalid method" });
+          return request(app)
+            .get("/api/comments?limit=1000")
+            .expect(200)
+            .then(({ body }) => {
+              expect(body.comments.length).toEqual(18);
+            });
+        });
+    });
+    it("status:405 - Invalid method for DELETE all topics", () => {
+      return request(app)
+        .delete("/api/topics")
+        .expect(405)
+        .then(({ body }) => {
+          expect(body).toMatchObject({ msg: "Invalid method" });
+          return request(app)
+            .get("/api/topics?limit=1000")
+            .expect(200)
+            .then(({ body }) => {
+              expect(body.topics.length).toEqual(3);
+            });
+        });
     });
   });
 });
