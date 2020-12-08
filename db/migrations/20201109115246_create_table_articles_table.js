@@ -4,14 +4,14 @@ exports.up = function (knex) {
     articlesTable.text('title').notNullable();
     articlesTable.text('body').notNullable();
     articlesTable.integer('votes').default(0);
+    articlesTable.text('topic').references('topics');
+    articlesTable.text('author').references('users.username');
+    articlesTable.timestamp('created_at').defaultTo(knex.fn.now());
     articlesTable
       .text('img_url')
       .defaultTo(
         'https://www.northampton.ac.uk/wp-content/uploads/2018/11/default-svp_news.jpg'
       );
-    articlesTable.text('topic').references('topics');
-    articlesTable.text('author').references('users.username');
-    articlesTable.timestamp('created_at').defaultTo(knex.fn.now());
   });
 };
 
