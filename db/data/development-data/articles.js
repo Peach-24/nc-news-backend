@@ -105,6 +105,7 @@ module.exports = [
     body:
       "Jose Mourinho was at The O2 on Sunday night to watch Dominic Thiem in action against Novak Djokovic. Thiem took the first set before Djokovic fought back to claim the victory, but Manchester United's manager was clearly impressed with the Austrian's performance.",
     created_at: 1523906972774,
+    img_url: 'https://i.ytimg.com/vi/wBX3_knqX6A/maxresdefault.jpg',
   },
   {
     title: 'Who Will Manage Your Club in 2021?',
@@ -129,6 +130,8 @@ module.exports = [
     body:
       "The history of Futbol Club Barcelona goes from the football club's founding in 1899 and up to current time. FC Barcelona, also known simply as Barcelona and familiarly as Barça, is based in Barcelona, Catalonia, Spain. The team was founded in 1899 by a group of Swiss, English and Spanish footballers led by Joan Gamper. The club played amateur football until 1910 in various regional competitions. In 1910, the club participated in their first of many European competitions, and has since amassed ten UEFA trophies and a sextuple. In 1928, Barcelona co-founded La Liga, the top-tier in Spanish football, along with a string of other clubs. As of 2016, Barcelona has never been relegated from La Liga, a record they share with Athletic Bilbao and arch-rival Real Madrid. The history of Barcelona has often been politically. Though it is a club created and run by foreigners, Barcelona gradually became a club associated with Catalan values. In Spain's transition to autocracy in 1925, Catalonia became increasingly hostile towards the central government in Madrid. The hostility enhanced Barcelona's image as a focal point for Catalonism, and when Francisco Franco banned the use of the Catalan language, the stadium of Barcelona became one of the few places the people could express their dissatisfaction. The Spanish transition to democracy in 1978 has not dampened the club's image of Catalan pride. In the 2000s – a period of sporting success in the club and an increased focus on Catalan players – club officials have openly called for Catalonia to become an independent state.",
     created_at: 1518899923448,
+    img_url:
+      'https://d1e00ek4ebabms.cloudfront.net/production/82ce59b0-be85-4e50-ad59-001d24ce0123.jpg',
   },
   {
     title: 'Which current Premier League manager was the best player?',
@@ -153,6 +156,8 @@ module.exports = [
     body:
       "Manchester United are the UK's most popular club on Instagram, with over 14m people following their account for their latest photos and videos. United's total number of followers is over six million more than second-placed Arsenal (8.1m), while Chelsea are third on the list with 7.7m followers, according to data exclusively compiled for Sky Sports. Instagram has a 500m-strong community, with one in three people on the social media site (around 165m) following a sports account.",
     created_at: 1501087741355,
+    img_url:
+      'https://cdn.pixabay.com/photo/2016/09/28/18/20/smartphone-1701096_960_720.jpg',
   },
   {
     title: 'History of Football',
@@ -201,6 +206,8 @@ module.exports = [
     body:
       'Roast your vegetables in honey before blitzing into this velvety smooth, spiced soup - served with garlicky, zesty ciabatta slices for dipping',
     created_at: 1503048314275,
+    img_url:
+      'https://cdn.pixabay.com/photo/2019/09/27/09/59/pumpkin-soup-4508015__340.jpg',
   },
   {
     title: 'HOW COOKING HAS CHANGED US',
@@ -217,6 +224,8 @@ module.exports = [
     body:
       'Thanksgiving is a foodie’s favorite holiday. Mashed potatoes, cranberry sauce, stuffing, and last but not least, a juicy turkey. Don’t let your meticulous menu fall short of perfection; flavorful cocktails are just as important as the meal. Here are a few ideas that will fit right into your festivities.',
     created_at: 1492970455514,
+    img_url:
+      'https://cdn.pixabay.com/photo/2016/03/27/18/53/drinks-1283608_960_720.jpg',
   },
   {
     title: 'High Altitude Cooking',
