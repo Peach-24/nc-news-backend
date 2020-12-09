@@ -9,6 +9,8 @@ const {
   handlePSQLErrors,
 } = require('./controllers/error-controllers');
 
+app.use(cors());
+
 app.use(express.json());
 app.use('/api', apiRouter);
 
@@ -16,7 +18,5 @@ app.all('/*', send404);
 
 app.use(handlePSQLErrors);
 app.use(handleInternalErrors);
-
-app.use(cors());
 
 module.exports = app;
