@@ -15,6 +15,8 @@ module.exports = [
     body:
       'Many people know Watson as the IBM-developed cognitive super computer that won the Jeopardy! gameshow in 2011. In truth, Watson is not actually a computer but a set of algorithms and APIs, and since winning TV fame (and a $1 million prize) IBM has put it to use tackling tough problems in every industry from healthcare to finance. Most recently, IBM has announced several new partnerships which aim to take things even further, and put its cognitive capabilities to use solving a whole new range of problems around the world.',
     created_at: 1500584273256,
+    img_url:
+      'https://images.livemint.com/rf/Image-621x414/LiveMint/Period2/2017/07/14/Photos/Processed/aja.jpg',
   },
   {
     title: '22 Amazing open source React projects',
@@ -23,6 +25,8 @@ module.exports = [
     body:
       'This is a collection of open source apps built with React.JS library. In this observation, we compared nearly 800 projects to pick the top 22. (React Native: 11, React: 11). To evaluate the quality, Mybridge AI considered a variety of factors to determine how useful the projects are for programmers. To give you an idea on the quality, the average number of Github stars from the 22 projects was 1,681.',
     created_at: 1500659650346,
+    img_url:
+      'https://www.inovex.de/blog/wp-content/uploads/2022/01/one-year-of-react-native.png',
   },
   {
     title: 'Making sense of Redux',
@@ -56,6 +60,8 @@ module.exports = [
     body:
       'When I interviewed for the iOS developer opening at Discord last spring, the tech lead Stanislav told me: React Native is the future. We will use it to build our iOS app from scratch as soon as it becomes public. As a native iOS developer, I strongly doubted using web technologies to build mobile apps because of my previous experiences with tools like PhoneGap. But after learning and using React Native for a while, I am glad we made that decision.',
     created_at: 1481146646335,
+    img_url:
+      'https://www.inovex.de/blog/wp-content/uploads/2022/01/one-year-of-react-native.png',
   },
   {
     title: 'Express.js: A Server-Side JavaScript Framework',
@@ -97,6 +103,7 @@ module.exports = [
     body:
       'The founder of the Node Security Project says Node.js still has common vulnerabilities, but progress has been made to make it more secure. Appearing at the recent Node Community Convention in San Francisco, project founder Adam Baldwin, chief security officer at Web consulting company &yet, emphasized risks, protections, and progress. Baldwin sees four risks within the Node ecosystem pertinent to the enterprise: the code dependency tree, bugs, malicious actors, and people. I think of [the dependency tree] more as the dependency iceberg, to be honest, Baldwin said, where your code is the ship and your dependencies that you have with your packaged JSON is that little tiny iceberg at the top. But developers need to be aware of the massive iceberg underneath, he stressed.',
     created_at: 1500291294879,
+    img_url: 'https://miro.medium.com/max/2840/1*iAXbbv57BJRlviNZaj6rgQ.png',
   },
   {
     title: "What does Jose Mourinho's handwriting say about his personality?",
@@ -122,6 +129,8 @@ module.exports = [
     body:
       'When Roy Hodgson resigned after this summer’s debacle, the England managerial merry go-round set into motion raising hopes that change would improve the nations fortunes.  In came Sam Allardyce but the same old squad was announced – apart from Michail Antonio – resulting in a similar type performance that was customary this summer. I was an advocate of Big Sam’s appointment because of the fact he managed down the league and could see that talent lay beyond just the big clubs in the country. Roy had many faults but the biggest frustration for me was he failed to utilise an already diminished pool of English players by continuing to pick the so called elite players – who are all tainted with failure. To be fair to Allardyce his first England game came so early in the season that it made making whole sale changes difficult. We shall never know if he would have picked different players. Since he left the job it was up to Gareth Southgate to take on the mantle and again hope arose that he may start to pick some of the talented under 21s that he has worked with over the last five years.',
     created_at: 1489429710045,
+    img_url:
+      'https://elitesoccercoaching.net/wp-content/uploads/2020/06/roy-hodgson-3.jpg',
   },
   {
     title: 'History of FC Barcelona',
@@ -140,6 +149,8 @@ module.exports = [
     body:
       "Premier League managers work with some of the top players in world football - but were they any good in their day? From European Cup and league title winners to one manager who only played at university, there's a diverse range of experience among the top-flight bosses. We've taken a look at the playing achievements and ability of the current Premier League managers and ranked them. Read on to see who ranks where...",
     created_at: 1468359811740,
+    img_url:
+      'https://images.daznservices.com/di/library/GOAL/38/70/alex-ferguson-manchester-united_1p6bdvrbct30p1a2q98mxulk4h.png?t=-2146914855&quality=60&w=1200&h=800',
   },
   {
     title: 'The People Tracking Every Touch, Pass And Tackle in the World Cup',
@@ -148,6 +159,8 @@ module.exports = [
     body:
       'With each click and drag of a mouse, young soccer fanatics are creating the building blocks of the advanced stats that are changing how the sport is played, watched and analyzed. Opta and Prozone are among the companies that have taken soccer stats far beyond goals and saves, into the realm of pass completion percentage, defensive touches, percentage of aerial balls won, tackle percentage and goals scored above expectation. Cameras alone can’t process all these stats. So companies employ people — mostly young, mostly male, most logging matches in their spare time as a second job — to watch matches and document every event. Their work has helped develop stats that capture the value of players who don’t score many goals, but who set them up with pinpoint passing and hustle. Teams use advanced stats to decide which players to buy and put on the pitch. And fans, whether they like it or not, read and hear more numbers than ever before about this sport that for so long bucked the sports-analytics trend.',
     created_at: 1522206238717,
+    img_url:
+      'https://www.marketplace.org/wp-content/uploads/2018/07/GettyImages-453347919.jpg?fit=1800%2C1000',
   },
   {
     title: 'Who are the most followed clubs and players on Instagram?',
@@ -166,6 +179,8 @@ module.exports = [
     body:
       'It may come as a surprise to many, but football has a long and interesting history; sources suggest that the sport was first introduced in England as early as 1170 when an account describes youths going to the fields for a ‘game of ball’. Aspects of the game can even be traced back to as early as the second and third century BC in China. Sources taken from military manuals at the time describe an exercise called Tsu’ Chu, in which opponents used a leather ball filled with feathers and hair. The aim was to get the ball into a small net fixed on to bamboo canes while also defending themselves from attacks. Variations of the game are also documented in Egyptian and Greek society, proving that the sport has a long tradition throughout history.',
     created_at: 1507623496497,
+    img_url:
+      'https://cdn.pixabay.com/photo/2016/11/14/05/21/children-1822688_960_720.jpg',
   },
   {
     title: 'Agility Training Drills For Football Players',
@@ -174,6 +189,8 @@ module.exports = [
     body:
       'There are so many areas of focus when it comes to football training, from strength training to ensure you can muscle past the opposition to endurance training to help you perform at your best for the 90 minutes of play. However, agility training should never be lost in the mix when planning sessions, as these drills will help you to change direction without losing balance, speed or strength. As a result, your body’s alignment will improve, your reaction speeds lowered and the chance of injury on the pitch reduced. When planning agility training drills for football players, MaxiNutrition believes coaches should look towards cones and ladders. The following guide explains how to use both pieces of equipment effectively:',
     created_at: 1475720706725,
+    img_url:
+      'https://cdn.pixabay.com/photo/2014/02/10/22/24/soccer-263716_960_720.jpg',
   },
   {
     title: 'Defensive Metrics: Measuring the Intensity of a High Press',
@@ -182,6 +199,8 @@ module.exports = [
     body:
       'In this article, with the use of detailed Opta data, I am going to create a metric that I believe can quantify the extent and aggression of high presses employed by teams, both over a season and in any specific match. I’m going to see if it is possible define the intensity of a press with the use of numbers, more specifically by using some of the events that Opta record. Why would anyone want to do this? Well, for pretty much the same reason that we undertake any analytics study. If we can develop an objective scale which measures the intensity of a press then coaches can quickly see at a glance the strength, or otherwise, of the high pressing that their opposition has utilised in recent games. Teams or fans can also assess how much pressure their team exerted on the opposition in deep positions, and who knows, perhaps in time we will be able to assess the effectiveness that individual players have on the ability of their team to press. In essence we can take what is otherwise a subjective description and reduce it to one number so that it allows for comparison, analysis and ranking, if so desired.',
     created_at: 1485410305946,
+    img_url:
+      'https://cdn.pixabay.com/photo/2018/06/12/20/17/football-3471402_960_720.jpg',
   },
   {
     title: 'Sunday league football',
@@ -190,6 +209,8 @@ module.exports = [
     body:
       'Sunday league football is a term used in the United Kingdom to describe those association football leagues which play on Sunday, as opposed to the more usual Saturday. These leagues tend to be lower standard amateur competitions, whose players may have less ability or less time to devote to football. The term pub league can also be used, due to the number of public houses that enter teams. Sunday leagues are sanctioned by the local County Football Association. There is no organised promotion or relegation between leagues, unlike in the National League System, which covers the top few levels of amateur football, although many leagues operate several divisions with promotion and relegation between them. However, ambitious Sunday teams may apply to join a Saturday league for a higher standard of football, and from there graduate to the FA-sanctioned leagues.',
     created_at: 1479470124415,
+    img_url:
+      'https://cdn.pixabay.com/photo/2015/01/21/00/56/football-606235_960_720.jpg',
   },
   {
     title: 'Game of talents: management lessons from top football coaches',
@@ -198,6 +219,8 @@ module.exports = [
     body:
       'At lunchtime on the day of the Champions League final in 2012, Chelsea’s manager Roberto Di Matteo had selected 10 of his 11 players. He just didn’t know who to play in left midfield. The player would have to combat Bayern Munich’s brilliant Arjen Robben and Philipp Lahm. Going into the last team meeting, Di Matteo had a private chat with his left-back, Ashley Cole. He outlined the situation, then asked Cole who he would play at left-midfield. Instead of naming a seasoned star, Cole said: “Ryan Bertrand.” The 22-year-old reserve Bertrand had never played in the Champions League, let alone in club football’s biggest game. “Why?” asked Di Matteo, surprised. “I trust him,” replied Cole. Bertrand played well, and Chelsea beat Bayern on penalties. In part, this was a victory for talent management. Di Matteo had put aside his ego, and let trust between two players drive the decision. Talent management has been a business obsession at least since 1997, when the consultancy McKinsey identified a “war for talent”. The most visible battleground of this “war” is team sport. Football, in particular, is “the quintessential model for modern-day talent-dependent business”, writes Chris Brady, professor at Salford Business School. Big football clubs pay more than half their revenues to between 3 and 7 per cent of their workforce: the players. These young men are rich, multinational, mobile, often equipped with large egos and therefore hard to manage. Football managers are, above all, talent managers.',
     created_at: 1491044088304,
+    img_url:
+      'https://cdn.pixabay.com/photo/2018/06/12/20/17/football-3471402_960_720.jpg',
   },
   {
     title: 'Sweet potato & butternut squash soup with lemon & garlic toast',
@@ -251,6 +274,8 @@ module.exports = [
     body:
       "What if, for once, your Thanksgiving sides were just as dazzling as the centerpiece turkey? Imagine a world where presenting a platter of seasonal vegetables inspires the same amount of cooing that the turkey does. Welcome to the world of twice-baked butternut squash. Sure, you could just roast some squash wedges and call it a day. But where's the fun in that? To make this year's most impressive vegetable side, Epi's food director Rhoda Boone gave super-seasonal butternut squash the twice-baked potatoes treatment: Mash the inside of the vegetable with butter, cream, and anything else that might make it more delicious, then pile it back into the vegetable, bake it until golden and velvety. The result is a jaw-dropping, brightly colored sweet-meet-savory butternut squash side dish. Here are just a few more reasons this creation belongs on this year's Thanksgiving table:",
     created_at: 1525574435489,
+    img_url:
+      'https://cdn.pixabay.com/photo/2019/09/27/09/59/pumpkin-soup-4508015__340.jpg',
   },
   {
     title: 'What to Cook This Week',
@@ -259,6 +284,8 @@ module.exports = [
     body:
       'Good morning. Here’s the plan for the week, not including breakfast because I’m on a farina kick and that’s not to everyone’s taste, and not including lunch because really when it comes to the midday hours you should get out of the office or the house and walk around. If you get something to eat, great, but the most important thing is to be outside where the stories are. There’s nothing happening at your desk but a screen. Anyway! I’m thinking chicken paprikash for dinner tonight, a nod toward the coming fall, served over buttery egg noodles, with green beans on the side. If you have the time, make an apple cake for dessert.',
     created_at: 1509866563519,
+    img_url:
+      'https://cdn.pixabay.com/photo/2017/01/14/10/57/woman-1979272_960_720.jpg',
   },
   {
     title: 'Halal food: Keeping pure and true',
@@ -267,6 +294,8 @@ module.exports = [
     body:
       "CHINA’S cities abound with restaurants and food stalls catering to Muslims as well as to the many other Chinese who relish the distinctive cuisines for which the country’s Muslims are renowned. So popular are kebabs cooked by Muslim Uighurs on the streets of Beijing that the city banned outdoor grills in 2014 in order to reduce smoke, which officials said was exacerbating the capital’s notorious smog (the air today is hardly less noxious). Often such food is claimed to be qing zhen, meaning 'pure and true', or halal, prepared according to traditional Islamic regulations. But who can tell? Last year angry Muslims besieged a halal bakery in Xining, the capital of Qinghai province, after pork sausages were found in the shop’s delivery van. There have been several scandals in recent years involving rat meat or pork being sold as lamb. These have spread Muslim mistrust of domestically produced halal products.",
     created_at: 1502869641660,
+    img_url:
+      'https://cdn.pixabay.com/photo/2014/06/16/23/10/spice-370114_960_720.jpg',
   },
   {
     title: 'Seafood substitutions are increasing',
