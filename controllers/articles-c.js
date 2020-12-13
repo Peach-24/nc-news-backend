@@ -5,12 +5,12 @@ const {
   makeComment,
   fetchCommentsByArticleId,
   removeArticle,
-} = require("../models/articles-m.js");
+} = require('../models/articles-m.js');
 
 const {
   formatArticleComments,
   removeBodyProperty,
-} = require("../db/utils/data-manipulation");
+} = require('../db/utils/data-manipulation');
 
 exports.getAllArticles = (req, res, next) => {
   const { sort_by, order, author, topic } = req.query;
@@ -20,7 +20,7 @@ exports.getAllArticles = (req, res, next) => {
     .then((articles) => {
       const formattedArticles = removeBodyProperty(articles);
       if (formattedArticles.length === 0) {
-        res.status(400).send({ msg: "Bad request" });
+        res.status(400).send({ msg: 'Bad request' });
       } else {
         res.status(200).send({ articles: formattedArticles });
       }
@@ -32,7 +32,8 @@ exports.getArticleById = (req, res, next) => {
   const { article_id } = req.params;
   fetchArticleById(article_id)
     .then((article) => {
-      res.status(200).send({ article });
+      console.log(article.article);
+      res.status(200).send({ article: article.article });
     })
     .catch(next);
 };
@@ -49,7 +50,7 @@ exports.patchArticle = (req, res, next) => {
 };
 
 exports.postComment = (req, res, next) => {
-  if (req.body.hasOwnProperty("username") && req.body.hasOwnProperty("body")) {
+  if (req.body.hasOwnProperty('username') && req.body.hasOwnProperty('body')) {
     const articleId = req.params.article_id;
     const { username, body } = req.body;
     const comment = { author: username, article_id: articleId, body: body };
@@ -59,7 +60,7 @@ exports.postComment = (req, res, next) => {
       })
       .catch(next);
   } else {
-    res.status(400).send({ msg: "Bad request" });
+    res.status(400).send({ msg: 'Bad request' });
   }
 };
 
@@ -72,7 +73,7 @@ exports.getCommentsByArticleId = (req, res, next) => {
     .then((comments) => {
       const formattedComments = formatArticleComments(comments);
       if (comments.length === 0) {
-        res.status(400).send({ msg: "Bad request" });
+        res.status(400).send({ msg: 'Bad request' });
       } else {
         res.status(200).send({ comments: formattedComments });
       }
@@ -85,7 +86,7 @@ exports.deleteArticle = (req, res, next) => {
   removeArticle(article_id)
     .then((article) => {
       if (article.length === 0) {
-        res.status(404).send({ msg: "Not found" });
+        res.status(404).send({ msg: 'Not found' });
       } else {
         res.status(204).send();
       }
