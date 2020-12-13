@@ -32,7 +32,11 @@ exports.getArticleById = (req, res, next) => {
   const { article_id } = req.params;
   fetchArticleById(article_id)
     .then((article) => {
-      res.status(200).send({ article });
+      if (article.length === 0) {
+        res.status(400).send({ msg: 'No article with that id.' });
+      } else {
+        res.status(200).send({ article });
+      }
     })
     .catch(next);
 };
