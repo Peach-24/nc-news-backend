@@ -4,7 +4,7 @@ exports.fetchAllArticles = (sort_by, order, author, topic, limit, offset) => {
   return connection
     .select('articles.*')
     .count('comment_id AS comment_count')
-    .limit(limit || '12')
+    .limit(limit || '30')
     .offset(offset || '0')
     .from('articles')
     .leftJoin('comments', 'articles.article_id', '=', 'comments.article_id')
