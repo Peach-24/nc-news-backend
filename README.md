@@ -4,7 +4,22 @@
 
 During this backend project, I built an API for the purpose of accessing application data programmatically. 
 
-The database uses PSQL, and [Knex](https://knexjs.org).
+The database uses PSQL, and queries to the database make use of [Knex](https://knexjs.org).
+
+The data was provided as part of a Northcoders sprint. 
+
+___
+
+## Testing
+
+I built this API using test-driven development to check both the response status codes, and response body formatting.
+
+I also have a test file for utility functions that formatted data used in seeding.
+
+For error-handling, see `/controllers/error-controllers.js`.
+
+
+___
 
 ### Database Schema
 
@@ -68,4 +83,9 @@ Responses are sent in an object, with a key name of what it is that being sent. 
 ```
 ---
 
+## Lessons learnt 
+
+This week-long sprint helped me gain a stronger understanding of the MVC pattern, even though I was primarily focussing on models and controllers.
+
+I also learnt how to make use of `Express` and `Axios` for making HTTP requests, and understood how `Knex` could help when it came to migrations, seeding the database, and having different ENVs - environments.
 
